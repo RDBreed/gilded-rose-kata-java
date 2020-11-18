@@ -33,56 +33,48 @@ class GildedRose {
     private void updateQuality(Item item) {
         if (isAgedBrie(item)) {
             if (isQualityLowerThanMaximalQuality(item)) {
-                item.quality = item.quality + 1;
-            }
-            if (isSellInLowerThanSellDate(item) && isQualityLowerThanMaximalQuality(item)) {
-                item.quality = item.quality + 1;
+                increaseQuality(item);
+                if (isSellInLowerThanSellDate(item)) {
+                    increaseQuality(item);
+                }
             }
         } else if (isBackStagePasses(item)) {
             if (isQualityLowerThanMaximalQuality(item)) {
-                item.quality = item.quality + 1;
+                increaseQuality(item);
 
-                if (isBackStagePasses(item)) {
-                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
-                        item.quality = item.quality + 1;
-                    }
-
-                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
-                        item.quality = item.quality + 1;
-                    }
+                if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE) {
+                    increaseQuality(item);
                 }
+
+                if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE) {
+                    increaseQuality(item);
+                }
+
                 if (isSellInLowerThanSellDate(item)) {
-                    item.quality = MINIMAL_QUALITY;
+                    setQualityToMinimalQuality(item);
                 }
             }
         } else {
             if (isQualityHigherThanMinimalQuality(item)) {
-                item.quality = item.quality - 1;
+                decreaseQuality(item);
+                if (isSellInLowerThanSellDate(item)) {
+                    decreaseQuality(item);
+                }
             }
-            if (isSellInLowerThanSellDate(item) && isQualityHigherThanMinimalQuality(item)) {
-                item.quality = item.quality - 1;
-            }
-        }
 
-        //This can be removed now...
-        if (isSellInLowerThanSellDate(item)) {
-            if (isAgedBrie(item)) {
-                if (isQualityLowerThanMaximalQuality(item)) {
-                    //this is for an aged brie when sellin < selldate && quality < max quality
-                    //moved to top condition
-                }
-            } else {
-                if (isBackStagePasses(item)) {
-                    //this is for an backstage passes when sellin < selldate
-                    //moved to top condition
-                } else {
-                    if (isQualityHigherThanMinimalQuality(item)) {
-                        //this for all other default items when sellin < selldate && quality > min quality
-                        //moved to top condition
-                    }
-                }
-            }
         }
+    }
+
+    private void decreaseQuality(Item item) {
+        item.quality = item.quality - 1;
+    }
+
+    private void setQualityToMinimalQuality(Item item) {
+        item.quality = MINIMAL_QUALITY;
+    }
+
+    private void increaseQuality(Item item) {
+        item.quality = item.quality + 1;
     }
 
     private void decreaseSellIn(Item item) {
