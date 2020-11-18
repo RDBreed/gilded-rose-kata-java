@@ -4,7 +4,7 @@ class GildedRose {
     private static final String AGED_BRIE = "Aged Brie";
     private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
     private static final String SULFARAS = "Sulfuras, Hand of Ragnaros";
-    private static final int MAX_DEFAULT_QUALITY = 50;
+    private static final int MAXIMAL_DEFAULT_QUALITY = 50;
     private static final int MINIMAL_QUALITY = 0;
     private static final int SELL_DATE = 0;
     private static final int BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE = 11;
@@ -18,26 +18,26 @@ class GildedRose {
     public void updateQuality() {
         for (int i = MINIMAL_QUALITY; i < items.length; i++) {
             Item actualItem = items[i];
-            if (!actualItem.name.equals(AGED_BRIE)
-                    && !actualItem.name.equals(BACKSTAGE_PASSES)) {
-                if (actualItem.quality > MINIMAL_QUALITY) {
-                    if (!actualItem.name.equals(SULFARAS)) {
+            if (!isAgedBrie(actualItem)
+                    && !isBackStagePasses(actualItem)) {
+                if (isQualityHigherThanMinimalQuality(actualItem)) {
+                    if (!isSulfaras(actualItem)) {
                         actualItem.quality = actualItem.quality - 1;
                     }
                 }
             } else {
-                if (actualItem.quality < MAX_DEFAULT_QUALITY) {
+                if (isQualityLowerThanMaximalQuality(actualItem)) {
                     actualItem.quality = actualItem.quality + 1;
 
-                    if (actualItem.name.equals(BACKSTAGE_PASSES)) {
+                    if (isBackStagePasses(actualItem)) {
                         if (actualItem.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE) {
-                            if (actualItem.quality < MAX_DEFAULT_QUALITY) {
+                            if (isQualityLowerThanMaximalQuality(actualItem)) {
                                 actualItem.quality = actualItem.quality + 1;
                             }
                         }
 
                         if (actualItem.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE) {
-                            if (actualItem.quality < MAX_DEFAULT_QUALITY) {
+                            if (isQualityLowerThanMaximalQuality(actualItem)) {
                                 actualItem.quality = actualItem.quality + 1;
                             }
                         }
@@ -45,15 +45,15 @@ class GildedRose {
                 }
             }
 
-            if (!actualItem.name.equals(SULFARAS)) {
+            if (!isSulfaras(actualItem)) {
                 actualItem.sellIn = actualItem.sellIn - 1;
             }
 
-            if (actualItem.sellIn < SELL_DATE) {
-                if (!actualItem.name.equals(AGED_BRIE)) {
-                    if (!actualItem.name.equals(BACKSTAGE_PASSES)) {
-                        if (actualItem.quality > MINIMAL_QUALITY) {
-                            if (!actualItem.name.equals(SULFARAS)) {
+            if (isSellInLowerThanSellDate(actualItem)) {
+                if (!isAgedBrie(actualItem)) {
+                    if (!isBackStagePasses(actualItem)) {
+                        if (isQualityHigherThanMinimalQuality(actualItem)) {
+                            if (!isSulfaras(actualItem)) {
                                 actualItem.quality = actualItem.quality - 1;
                             }
                         }
@@ -61,11 +61,35 @@ class GildedRose {
                         actualItem.quality = MINIMAL_QUALITY;
                     }
                 } else {
-                    if (actualItem.quality < MAX_DEFAULT_QUALITY) {
+                    if (isQualityLowerThanMaximalQuality(actualItem)) {
                         actualItem.quality = actualItem.quality + 1;
                     }
                 }
             }
         }
+    }
+
+    private boolean isSellInLowerThanSellDate(Item actualItem) {
+        return actualItem.sellIn < SELL_DATE;
+    }
+
+    private boolean isQualityLowerThanMaximalQuality(Item actualItem) {
+        return actualItem.quality < MAXIMAL_DEFAULT_QUALITY;
+    }
+
+    private boolean isQualityHigherThanMinimalQuality(Item actualItem) {
+        return actualItem.quality > MINIMAL_QUALITY;
+    }
+
+    private boolean isSulfaras(Item actualItem) {
+        return actualItem.name.equals(SULFARAS);
+    }
+
+    private boolean isBackStagePasses(Item actualItem) {
+        return actualItem.name.equals(BACKSTAGE_PASSES);
+    }
+
+    private boolean isAgedBrie(Item actualItem) {
+        return actualItem.name.equals(AGED_BRIE);
     }
 }
