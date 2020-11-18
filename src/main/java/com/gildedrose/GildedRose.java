@@ -7,8 +7,8 @@ class GildedRose {
     private static final int MAXIMAL_DEFAULT_QUALITY = 50;
     private static final int MINIMAL_QUALITY = 0;
     private static final int SELL_DATE = 0;
-    private static final int BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE = 11;
-    private static final int BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE = 6;
+    private static final int BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE = 10;
+    private static final int BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE = 5;
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -23,48 +23,57 @@ class GildedRose {
 
     private void updateItem(Item item) {
         if (!isSulfaras(item)) {
+
+            decreaseSellIn(item);
+
+            updateQuality(item);
+        }
+    }
+
+    private void updateQuality(Item item) {
+        if (isAgedBrie(item)) {
+            if (isQualityLowerThanMaximalQuality(item)) {
+                item.quality = item.quality + 1;
+            }
+        } else if (isBackStagePasses(item)) {
+            if (isQualityLowerThanMaximalQuality(item)) {
+                item.quality = item.quality + 1;
+
+                if (isBackStagePasses(item)) {
+                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
+                        item.quality = item.quality + 1;
+                    }
+
+                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
+                        item.quality = item.quality + 1;
+                    }
+                }
+            }
+        } else {
+            if (isQualityHigherThanMinimalQuality(item)) {
+                item.quality = item.quality - 1;
+            }
+        }
+
+        if (isSellInLowerThanSellDate(item)) {
             if (isAgedBrie(item)) {
                 if (isQualityLowerThanMaximalQuality(item)) {
                     item.quality = item.quality + 1;
                 }
-            } else if (isBackStagePasses(item)) {
-                if (isQualityLowerThanMaximalQuality(item)) {
-                    item.quality = item.quality + 1;
-
-                    if (isBackStagePasses(item)) {
-                        if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
-                            item.quality = item.quality + 1;
-                        }
-
-                        if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-                }
             } else {
-                if (isQualityHigherThanMinimalQuality(item)) {
-                    item.quality = item.quality - 1;
-                }
-            }
-
-            item.sellIn = item.sellIn - 1;
-
-            if (isSellInLowerThanSellDate(item)) {
-                if (isAgedBrie(item)) {
-                    if (isQualityLowerThanMaximalQuality(item)) {
-                        item.quality = item.quality + 1;
-                    }
+                if (isBackStagePasses(item)) {
+                    item.quality = MINIMAL_QUALITY;
                 } else {
-                    if (isBackStagePasses(item)) {
-                        item.quality = MINIMAL_QUALITY;
-                    } else {
-                        if (isQualityHigherThanMinimalQuality(item)) {
-                            item.quality = item.quality - 1;
-                        }
+                    if (isQualityHigherThanMinimalQuality(item)) {
+                        item.quality = item.quality - 1;
                     }
                 }
             }
         }
+    }
+
+    private void decreaseSellIn(Item item) {
+        item.sellIn = item.sellIn - 1;
     }
 
     private boolean isSellInLowerThanSellDate(Item actualItem) {
