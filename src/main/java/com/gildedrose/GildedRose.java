@@ -22,52 +22,51 @@ class GildedRose {
     }
 
     private void updateItem(Item item) {
-        Item actualItem = item;
-        if (!isAgedBrie(actualItem)
-                && !isBackStagePasses(actualItem)) {
-            if (isQualityHigherThanMinimalQuality(actualItem)) {
-                if (!isSulfaras(actualItem)) {
-                    actualItem.quality = actualItem.quality - 1;
+        if (!isAgedBrie(item)
+                && !isBackStagePasses(item)) {
+            if (isQualityHigherThanMinimalQuality(item)) {
+                if (!isSulfaras(item)) {
+                    item.quality = item.quality - 1;
                 }
             }
         } else {
-            if (isQualityLowerThanMaximalQuality(actualItem)) {
-                actualItem.quality = actualItem.quality + 1;
+            if (isQualityLowerThanMaximalQuality(item)) {
+                item.quality = item.quality + 1;
 
-                if (isBackStagePasses(actualItem)) {
-                    if (actualItem.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE) {
-                        if (isQualityLowerThanMaximalQuality(actualItem)) {
-                            actualItem.quality = actualItem.quality + 1;
+                if (isBackStagePasses(item)) {
+                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE) {
+                        if (isQualityLowerThanMaximalQuality(item)) {
+                            item.quality = item.quality + 1;
                         }
                     }
 
-                    if (actualItem.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE) {
-                        if (isQualityLowerThanMaximalQuality(actualItem)) {
-                            actualItem.quality = actualItem.quality + 1;
+                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE) {
+                        if (isQualityLowerThanMaximalQuality(item)) {
+                            item.quality = item.quality + 1;
                         }
                     }
                 }
             }
         }
 
-        if (!isSulfaras(actualItem)) {
-            actualItem.sellIn = actualItem.sellIn - 1;
+        if (!isSulfaras(item)) {
+            item.sellIn = item.sellIn - 1;
         }
 
-        if (isSellInLowerThanSellDate(actualItem)) {
-            if (!isAgedBrie(actualItem)) {
-                if (!isBackStagePasses(actualItem)) {
-                    if (isQualityHigherThanMinimalQuality(actualItem)) {
-                        if (!isSulfaras(actualItem)) {
-                            actualItem.quality = actualItem.quality - 1;
+        if (isSellInLowerThanSellDate(item)) {
+            if (!isAgedBrie(item)) {
+                if (!isBackStagePasses(item)) {
+                    if (isQualityHigherThanMinimalQuality(item)) {
+                        if (!isSulfaras(item)) {
+                            item.quality = item.quality - 1;
                         }
                     }
                 } else {
-                    actualItem.quality = MINIMAL_QUALITY;
+                    item.quality = MINIMAL_QUALITY;
                 }
             } else {
-                if (isQualityLowerThanMaximalQuality(actualItem)) {
-                    actualItem.quality = actualItem.quality + 1;
+                if (isQualityLowerThanMaximalQuality(item)) {
+                    item.quality = item.quality + 1;
                 }
             }
         }
