@@ -10,18 +10,11 @@ public class ConjuredDecorator extends ItemDecorator {
     @Override
     public void update() {
         decreaseSellIn();
-
-        if (isQualityHigherThanMinimalQuality()) {
+        decreaseQuality();
+        decreaseQuality();
+        if (isSellInLowerThanSellDate()) {
             decreaseQuality();
-            if(isQualityHigherThanMinimalQuality()){
-                decreaseQuality();
-            }
-            if (isSellInLowerThanSellDate() && isQualityHigherThanMinimalQuality()) {
-                decreaseQuality();
-                if (isQualityHigherThanMinimalQuality()) {
-                    decreaseQuality();
-                }
-            }
+            decreaseQuality();
         }
     }
 }

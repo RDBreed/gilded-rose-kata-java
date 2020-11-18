@@ -2,6 +2,9 @@ package com.gildedrose.itemdecorators;
 
 import com.gildedrose.Item;
 
+/**
+ * Decorator to wrap around an item to perform an proper update.
+ */
 public abstract class ItemDecorator extends Item {
     private static final int MAXIMAL_DEFAULT_QUALITY = 50;
     private static final int MINIMAL_QUALITY = 0;
@@ -20,16 +23,22 @@ public abstract class ItemDecorator extends Item {
         return item.sellIn;
     }
 
+    /**
+     * Decrease quality by 1 when quality is not lower than the minimal quality
+     */
     void decreaseQuality() {
-        item.quality = item.quality - 1;
+        item.quality = Math.max(item.quality - 1, MINIMAL_QUALITY);
     }
 
     void setQualityToMinimalQuality() {
         item.quality = MINIMAL_QUALITY;
     }
 
+    /**
+     * Increase quality by 1 when quality is not higher than the maximal quality
+     */
     void increaseQuality() {
-        item.quality = item.quality + 1;
+        item.quality = Math.min(item.quality + 1, MAXIMAL_DEFAULT_QUALITY);
     }
 
     void decreaseSellIn() {
@@ -40,11 +49,4 @@ public abstract class ItemDecorator extends Item {
         return item.sellIn < SELL_DATE;
     }
 
-    boolean isQualityLowerThanMaximalQuality() {
-        return item.quality < MAXIMAL_DEFAULT_QUALITY;
-    }
-
-    boolean isQualityHigherThanMinimalQuality() {
-        return item.quality > MINIMAL_QUALITY;
-    }
 }

@@ -8,4 +8,4 @@ Each commit will show separate steps to the refactoring process that have been m
 
 To view the results, run the tests by IDE, Maven or the included Gradlew.
 
-Some functional questions were left open for discussion.
+Some [functional questions](FUNCTIONAL_QUESTIONS.md) were left open for discussion.

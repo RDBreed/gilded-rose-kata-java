@@ -11,11 +11,9 @@ public class DefaultItemDecorator extends ItemDecorator {
     @Override
     public void update() {
         decreaseSellIn();
-        if (isQualityHigherThanMinimalQuality()) {
+        decreaseQuality();
+        if (isSellInLowerThanSellDate()) {
             decreaseQuality();
-            if (isSellInLowerThanSellDate() && isQualityHigherThanMinimalQuality()) {
-                decreaseQuality();
-            }
         }
     }
 }

@@ -13,19 +13,15 @@ public class BackstagePassesDecorator extends ItemDecorator {
     @Override
     public void update() {
         decreaseSellIn();
-        if (isQualityLowerThanMaximalQuality()) {
+        if (isSellInLowerThanSellDate()) {
+            setQualityToMinimalQuality();
+        } else {
             increaseQuality();
-
-            if (getSellIn() < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE && isQualityLowerThanMaximalQuality()) {
+            if (getSellIn() < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE) {
                 increaseQuality();
             }
-
-            if (getSellIn() < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE && isQualityLowerThanMaximalQuality()) {
+            if (getSellIn() < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE) {
                 increaseQuality();
-            }
-
-            if (isSellInLowerThanSellDate()) {
-                setQualityToMinimalQuality();
             }
         }
     }

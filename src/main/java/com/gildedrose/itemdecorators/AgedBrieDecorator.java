@@ -11,11 +11,9 @@ public class AgedBrieDecorator extends ItemDecorator {
     @Override
     public void update() {
         decreaseSellIn();
-        if (isQualityLowerThanMaximalQuality()) {
+        increaseQuality();
+        if (isSellInLowerThanSellDate()) {
             increaseQuality();
-            if (isSellInLowerThanSellDate() && isQualityLowerThanMaximalQuality()) {
-                increaseQuality();
-            }
         }
     }
 }
