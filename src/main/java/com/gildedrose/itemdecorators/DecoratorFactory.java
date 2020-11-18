@@ -6,6 +6,7 @@ public class DecoratorFactory {
     private static final String AGED_BRIE = "Aged Brie";
     private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
     private static final String SULFARAS = "Sulfuras, Hand of Ragnaros";
+    private static final String CONJURED = "Conjured Mana Cake";
 
     private DecoratorFactory(){
         //not needed since this is a factory (with static methods)
@@ -38,6 +39,6 @@ public class DecoratorFactory {
     }
 
     private static boolean isConjured(Item item){
-        return item.name.equals("Conjured Mana Cake");
+        return item.name.equals(CONJURED);
     }
 }
