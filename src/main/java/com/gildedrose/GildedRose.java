@@ -32,36 +32,47 @@ class GildedRose {
 
     private void updateQuality(Item item) {
         if (isAgedBrie(item)) {
-            if (isQualityLowerThanMaximalQuality(item)) {
-                increaseQuality(item);
-                if (isSellInLowerThanSellDate(item)) {
-                    increaseQuality(item);
-                }
-            }
+            updateAgedBrieQuality(item);
         } else if (isBackStagePasses(item)) {
-            if (isQualityLowerThanMaximalQuality(item)) {
-                increaseQuality(item);
-
-                if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE) {
-                    increaseQuality(item);
-                }
-
-                if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE) {
-                    increaseQuality(item);
-                }
-
-                if (isSellInLowerThanSellDate(item)) {
-                    setQualityToMinimalQuality(item);
-                }
-            }
+            updateBackStagePassesQuality(item);
         } else {
-            if (isQualityHigherThanMinimalQuality(item)) {
-                decreaseQuality(item);
-                if (isSellInLowerThanSellDate(item)) {
-                    decreaseQuality(item);
-                }
+            updateDefaultItemQuality(item);
+        }
+    }
+
+    private void updateAgedBrieQuality(Item item) {
+        if (isQualityLowerThanMaximalQuality(item)) {
+            increaseQuality(item);
+            if (isSellInLowerThanSellDate(item)) {
+                increaseQuality(item);
+            }
+        }
+    }
+
+    private void updateBackStagePassesQuality(Item item) {
+        if (isQualityLowerThanMaximalQuality(item)) {
+            increaseQuality(item);
+
+            if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE) {
+                increaseQuality(item);
             }
 
+            if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE) {
+                increaseQuality(item);
+            }
+
+            if (isSellInLowerThanSellDate(item)) {
+                setQualityToMinimalQuality(item);
+            }
+        }
+    }
+
+    private void updateDefaultItemQuality(Item item) {
+        if (isQualityHigherThanMinimalQuality(item)) {
+            decreaseQuality(item);
+            if (isSellInLowerThanSellDate(item)) {
+                decreaseQuality(item);
+            }
         }
     }
 
