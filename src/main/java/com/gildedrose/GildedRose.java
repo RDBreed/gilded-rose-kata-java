@@ -24,26 +24,20 @@ class GildedRose {
     private void updateItem(Item item) {
         if (!isAgedBrie(item)
                 && !isBackStagePasses(item)) {
-            if (isQualityHigherThanMinimalQuality(item)) {
-                if (!isSulfaras(item)) {
-                    item.quality = item.quality - 1;
-                }
+            if (isQualityHigherThanMinimalQuality(item) && !isSulfaras(item)) {
+                item.quality = item.quality - 1;
             }
         } else {
             if (isQualityLowerThanMaximalQuality(item)) {
                 item.quality = item.quality + 1;
 
                 if (isBackStagePasses(item)) {
-                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE) {
-                        if (isQualityLowerThanMaximalQuality(item)) {
-                            item.quality = item.quality + 1;
-                        }
+                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
+                        item.quality = item.quality + 1;
                     }
 
-                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE) {
-                        if (isQualityLowerThanMaximalQuality(item)) {
-                            item.quality = item.quality + 1;
-                        }
+                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
+                        item.quality = item.quality + 1;
                     }
                 }
             }
@@ -56,10 +50,8 @@ class GildedRose {
         if (isSellInLowerThanSellDate(item)) {
             if (!isAgedBrie(item)) {
                 if (!isBackStagePasses(item)) {
-                    if (isQualityHigherThanMinimalQuality(item)) {
-                        if (!isSulfaras(item)) {
-                            item.quality = item.quality - 1;
-                        }
+                    if (isQualityHigherThanMinimalQuality(item) && !isSulfaras(item)) {
+                        item.quality = item.quality - 1;
                     }
                 } else {
                     item.quality = MINIMAL_QUALITY;
