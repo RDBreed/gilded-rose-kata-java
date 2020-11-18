@@ -22,22 +22,36 @@ class GildedRose {
     }
 
     private void updateItem(Item item) {
-        if (isAgedBrie(item)
-                || isBackStagePasses(item)) {
-                    if (isQualityLowerThanMaximalQuality(item)) {
+        if (isAgedBrie(item)) {
+            if (isQualityLowerThanMaximalQuality(item)) {
+                item.quality = item.quality + 1;
+
+                //Will remove this in next commit as it can never reach this condition here (item = aged brie and thus != backstage passes)
+                if (isBackStagePasses(item)) {
+                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
                         item.quality = item.quality + 1;
-
-                        if (isBackStagePasses(item)) {
-                            if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
-                                item.quality = item.quality + 1;
-                            }
-
-                            if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
-                                item.quality = item.quality + 1;
-                            }
-                        }
                     }
-                } else {
+
+                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
+                        item.quality = item.quality + 1;
+                    }
+                }
+            }
+        } else if (isBackStagePasses(item)) {
+            if (isQualityLowerThanMaximalQuality(item)) {
+                item.quality = item.quality + 1;
+
+                if (isBackStagePasses(item)) {
+                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
+                        item.quality = item.quality + 1;
+                    }
+
+                    if (item.sellIn < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE && isQualityLowerThanMaximalQuality(item)) {
+                        item.quality = item.quality + 1;
+                    }
+                }
+            }
+        } else {
             if (isQualityHigherThanMinimalQuality(item) && !isSulfaras(item)) {
                 item.quality = item.quality - 1;
             }
