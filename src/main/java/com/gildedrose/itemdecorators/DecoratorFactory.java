@@ -18,6 +18,8 @@ public class DecoratorFactory {
             return new AgedBrieDecorator(item);
         } else if (isBackStagePasses(item)) {
             return new BackstagePassesDecorator(item);
+        } else if (isConjured(item)) {
+            return new ConjuredDecorator(item);
         } else {
             return new DefaultItemDecorator(item);
         }
@@ -33,5 +35,9 @@ public class DecoratorFactory {
 
     private static boolean isAgedBrie(Item actualItem) {
         return actualItem.name.equals(AGED_BRIE);
+    }
+
+    private static boolean isConjured(Item item){
+        return item.name.equals("Conjured Mana Cake");
     }
 }

@@ -13,7 +13,6 @@ class ConjuredGildedRoseParameterizedTest extends AbstractGildedRoseParameterize
     @ParameterizedTest
     @DisplayName("Test conjured behaviour")
     @MethodSource("conjuredItemProvider")
-    @Disabled("Feature not implemented yet")
     void testConjuredItemBehaviour(Parameterized parameterized) {
         assertSingleItem(parameterized.updateDays, parameterized.actual, parameterized.expected[0]);
     }
