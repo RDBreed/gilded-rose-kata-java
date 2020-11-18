@@ -35,6 +35,9 @@ class GildedRose {
             if (isQualityLowerThanMaximalQuality(item)) {
                 item.quality = item.quality + 1;
             }
+            if (isSellInLowerThanSellDate(item) && isQualityLowerThanMaximalQuality(item)) {
+                item.quality = item.quality + 1;
+            }
         } else if (isBackStagePasses(item)) {
             if (isQualityLowerThanMaximalQuality(item)) {
                 item.quality = item.quality + 1;
@@ -48,24 +51,34 @@ class GildedRose {
                         item.quality = item.quality + 1;
                     }
                 }
+                if (isSellInLowerThanSellDate(item)) {
+                    item.quality = MINIMAL_QUALITY;
+                }
             }
         } else {
             if (isQualityHigherThanMinimalQuality(item)) {
                 item.quality = item.quality - 1;
             }
+            if (isSellInLowerThanSellDate(item) && isQualityHigherThanMinimalQuality(item)) {
+                item.quality = item.quality - 1;
+            }
         }
 
+        //This can be removed now...
         if (isSellInLowerThanSellDate(item)) {
             if (isAgedBrie(item)) {
                 if (isQualityLowerThanMaximalQuality(item)) {
-                    item.quality = item.quality + 1;
+                    //this is for an aged brie when sellin < selldate && quality < max quality
+                    //moved to top condition
                 }
             } else {
                 if (isBackStagePasses(item)) {
-                    item.quality = MINIMAL_QUALITY;
+                    //this is for an backstage passes when sellin < selldate
+                    //moved to top condition
                 } else {
                     if (isQualityHigherThanMinimalQuality(item)) {
-                        item.quality = item.quality - 1;
+                        //this for all other default items when sellin < selldate && quality > min quality
+                        //moved to top condition
                     }
                 }
             }
