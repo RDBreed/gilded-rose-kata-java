@@ -52,6 +52,13 @@ class DefaultItemGildedRoseParameterizedTest extends AbstractGildedRoseParameter
                                 defaultName, 0, 0,
                                 defaultName, -1, 0,
                                 1,
+                                "Test should not decrease quality below zero after selldate")),
+
+                Arguments.of(
+                        new Parameterized(
+                                defaultName, 0, 1,
+                                defaultName, -1, 0,
+                                1,
                                 "Test should not decrease quality below zero after selldate"))
         );
     }

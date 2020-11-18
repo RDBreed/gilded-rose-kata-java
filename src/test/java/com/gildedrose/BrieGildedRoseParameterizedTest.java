@@ -42,6 +42,13 @@ class BrieGildedRoseParameterizedTest  extends AbstractGildedRoseParameterizedTe
 
                 Arguments.of(
                         new Parameterized(
+                                defaultName, 0, 49,
+                                defaultName, -1, 50,
+                                1,
+                                "Test should not increase quality above fifty after selldate")),
+
+                Arguments.of(
+                        new Parameterized(
                                 defaultName, 0, 50,
                                 defaultName, -1, 50,
                                 1,

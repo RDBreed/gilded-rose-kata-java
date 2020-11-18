@@ -24,7 +24,7 @@ class BackstagePassesGildedRoseParameterizedTest extends AbstractGildedRoseParam
                                 defaultName, 20, 20,
                                 defaultName, 19, 21,
                                 1,
-                                "Test should decrease quality by one with > 10 selldays")),
+                                "Test should increase quality by one with > 10 selldays")),
 
                 Arguments.of(
                         new Parameterized(
@@ -37,6 +37,26 @@ class BackstagePassesGildedRoseParameterizedTest extends AbstractGildedRoseParam
                         new Parameterized(
                                 defaultName, 5, 20,
                                 defaultName, 4, 23,
+                                1,
+                                "Test should increase quality by three with <= 5 selldays")),
+                Arguments.of(
+                        new Parameterized(
+                                defaultName, 20, 50,
+                                defaultName, 19, 50,
+                                1,
+                                "Test should not increase quality by one with > 10 selldays when maximum")),
+
+                Arguments.of(
+                        new Parameterized(
+                                defaultName, 10, 49,
+                                defaultName, 9, 50,
+                                1,
+                                "Test should increase quality twice with <= 10 & > 5 selldays")),
+
+                Arguments.of(
+                        new Parameterized(
+                                defaultName, 5, 48,
+                                defaultName, 4, 50,
                                 1,
                                 "Test should increase quality by three with <= 5 selldays")),
 
