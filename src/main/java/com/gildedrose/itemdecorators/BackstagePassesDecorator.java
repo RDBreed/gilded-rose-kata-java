@@ -16,12 +16,11 @@ public class BackstagePassesDecorator extends ItemDecorator {
         if (isQualityLowerThanMaximalQuality()) {
             increaseQuality();
 
-            //here removed isQualityLowerThanMaximalQuality as I thought it was unnecessary... Of course not!
-            if (getSellIn() < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE) {
+            if (getSellIn() < BACKSTAGE_PASSES_SELL_DATE_FIRST_UPGRADE && isQualityLowerThanMaximalQuality()) {
                 increaseQuality();
             }
 
-            if (getSellIn() < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE) {
+            if (getSellIn() < BACKSTAGE_PASSES_SELL_DATE_SECOND_UPGRADE && isQualityLowerThanMaximalQuality()) {
                 increaseQuality();
             }
 
